@@ -112,7 +112,10 @@ function initBasicCalculator() {
             } else {
                 // Round to max 8 decimal places
                 const roundedResult = Number(Math.round(fnResult + 'e8') + 'e-8');
-                updateScreen(formatExpr(cleanExpr) + ' =', roundedResult.toString());
+                exprEl.textContent = formatExpr(cleanExpr) + ' =';
+                const decArr = roundedResult.toString().split('.');
+                const decimals = decArr.length > 1 ? Math.min(decArr[1].length, 6) : 0;
+                animateNumber(valEl, roundedResult, '', '', decimals);
                 expression = roundedResult.toString();
                 resultCalculated = true;
             }
@@ -228,20 +231,20 @@ function initShopkeeperCalculator() {
             profitPercent = (profitOrLoss / totalCost) * 100;
         }
 
-        // Display results
-        resTotalCost.textContent = `$${totalCost.toFixed(2)}`;
-        resTotalSelling.textContent = `$${totalSelling.toFixed(2)}`;
-        resGstAmount.textContent = `$${gstAmount.toFixed(2)}`;
-        resNetAmount.textContent = `$${netAmount.toFixed(2)}`;
+        // Display results with counters animation
+        animateNumber(resTotalCost, totalCost, '$', '', 2);
+        animateNumber(resTotalSelling, totalSelling, '$', '', 2);
+        animateNumber(resGstAmount, gstAmount, '$', '', 2);
+        animateNumber(resNetAmount, netAmount, '$', '', 2);
 
         // Handle profit / loss display dynamically
         if (profitOrLoss >= 0) {
             resProfitLabel.textContent = 'Profit:';
-            resProfitLoss.textContent = `$${profitOrLoss.toFixed(2)} (${profitPercent.toFixed(2)}%)`;
+            animateNumber(resProfitLoss, profitOrLoss, '$', ` (${profitPercent.toFixed(2)}%)`, 2);
             resProfitLoss.className = 'profit-text';
         } else {
             resProfitLabel.textContent = 'Loss:';
-            resProfitLoss.textContent = `$${Math.abs(profitOrLoss).toFixed(2)} (${Math.abs(profitPercent).toFixed(2)}%)`;
+            animateNumber(resProfitLoss, Math.abs(profitOrLoss), '$', ` (${Math.abs(profitPercent).toFixed(2)}%)`, 2);
             resProfitLoss.className = 'loss-text';
         }
     }
@@ -399,7 +402,9 @@ function initScientificCalculator() {
         } else {
             const roundedVal = Number(Math.round(val + 'e8') + 'e-8');
             exprEl.textContent = formatExpr(expression) + ' =';
-            valEl.textContent = roundedVal.toString();
+            const decArr = roundedVal.toString().split('.');
+            const decimals = decArr.length > 1 ? Math.min(decArr[1].length, 6) : 0;
+            animateNumber(valEl, roundedVal, '', '', decimals);
             expression = roundedVal.toString();
             resultCalculated = true;
         }
@@ -548,7 +553,7 @@ function initPercentageCalculator() {
             return;
         }
         const result = (x / 100) * y;
-        p1res.textContent = formatNumber(result);
+        animateNumber(p1res, result, '', '', result % 1 === 0 ? 0 : 2);
     });
 
     p1reset.addEventListener('click', () => {
@@ -572,7 +577,7 @@ function initPercentageCalculator() {
             return;
         }
         const result = (x / y) * 100;
-        p2res.textContent = formatNumber(result) + '%';
+        animateNumber(p2res, result, '', '%', 2);
     });
 
     p2reset.addEventListener('click', () => {
@@ -596,7 +601,7 @@ function initPercentageCalculator() {
             return;
         }
         const result = base + (base * (pct / 100));
-        p3res.textContent = formatNumber(result);
+        animateNumber(p3res, result, '', '', 2);
     });
 
     p3reset.addEventListener('click', () => {
@@ -620,7 +625,7 @@ function initPercentageCalculator() {
             return;
         }
         const result = base - (base * (pct / 100));
-        p4res.textContent = formatNumber(result);
+        animateNumber(p4res, result, '', '', 2);
     });
 
     p4reset.addEventListener('click', () => {
@@ -644,7 +649,7 @@ function initPercentageCalculator() {
             return;
         }
         const result = (obtained / total) * 100;
-        p5res.textContent = formatNumber(result) + '%';
+        animateNumber(p5res, result, '', '%', 2);
     });
 
     p5reset.addEventListener('click', () => {
@@ -666,7 +671,7 @@ function initPercentageCalculator() {
             return;
         }
         const result = cgpa * 9.5;
-        p6res.textContent = formatNumber(result) + '%';
+        animateNumber(p6res, result, '', '%', 2);
     });
 
     p6reset.addEventListener('click', () => {
@@ -713,4 +718,40 @@ function initScrollAnimations() {
             }
         });
     }
+}
+
+// ==========================================
+// 6. Resilient Number Animation Counter
+// ==========================================
+function animateNumber(element, endValue, prefix = '', suffix = '', decimals = 2, duration = 600) {
+    if (isNaN(endValue) || !isFinite(endValue)) {
+        element.textContent = prefix + 'Error' + suffix;
+        return;
+    }
+
+    const currentText = element.textContent || '';
+    const cleanCurrentText = currentText.replace(/[^\d\.\-]/g, '');
+    let startValue = parseFloat(cleanCurrentText) || 0;
+
+    const startTime = performance.now();
+
+    function update(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+
+        // Ease-out Quad curve
+        const easeProgress = progress * (2 - progress);
+
+        const currentValue = startValue + (endValue - startValue) * easeProgress;
+        
+        element.textContent = prefix + currentValue.toFixed(decimals) + suffix;
+
+        if (progress < 1) {
+            requestAnimationFrame(update);
+        } else {
+            element.textContent = prefix + endValue.toFixed(decimals) + suffix;
+        }
+    }
+
+    requestAnimationFrame(update);
 }
