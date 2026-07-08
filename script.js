@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initShopkeeperCalculator();
     initScientificCalculator();
     initPercentageCalculator();
+    initScrollAnimations();
 });
 
 // ==========================================
@@ -672,4 +673,44 @@ function initPercentageCalculator() {
         p6cgpa.value = '';
         p6res.textContent = '0%';
     });
+}
+
+// ==========================================
+// 5. Scroll Animations Module
+// ==========================================
+function initScrollAnimations() {
+    const fadeElements = document.querySelectorAll('.fade-up');
+
+    const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                // Stop observing once element is visible
+                obs.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -40px 0px'
+    });
+
+    fadeElements.forEach(el => {
+        observer.observe(el);
+    });
+
+    // Smooth scroll for start-btn
+    const startBtn = document.querySelector('.start-btn');
+    if (startBtn) {
+        startBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = startBtn.getAttribute('href');
+            const targetEl = document.querySelector(targetId);
+            if (targetEl) {
+                targetEl.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    }
 }
