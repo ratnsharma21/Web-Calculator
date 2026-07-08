@@ -556,6 +556,121 @@ input {
     transform: translateY(0);
 }
 
+/* Shopkeeper Calculator */
+.shopkeeper-inputs {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 480px) {
+    .shopkeeper-inputs {
+        grid-template-columns: 1fr;
+    }
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.input-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.input-group input {
+    height: 48px;
+    padding: 0 16px;
+    border-radius: var(--radius-md);
+    border: 1.5px solid rgba(149, 189, 215, 0.25);
+    background-color: #f8fafc;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: var(--transition-smooth);
+    color: var(--text-primary);
+}
+
+.input-group input:focus {
+    border-color: var(--accent-highlight);
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3.5px rgba(120, 164, 203, 0.15);
+}
+
+.btn-calculate {
+    flex: 2;
+    padding: 14px;
+    border-radius: var(--radius-md);
+    font-weight: 700;
+    font-size: 0.95rem;
+    background-color: var(--accent-highlight);
+    color: #ffffff;
+    text-align: center;
+    border: 1px solid var(--accent-highlight);
+    transition: var(--transition-smooth);
+}
+
+.btn-calculate:hover {
+    background-color: #648fb1;
+    border-color: #648fb1;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(120, 164, 203, 0.35);
+}
+
+.btn-calculate:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+.shopkeeper-results {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background-color: #f8fafc;
+    border-radius: var(--radius-md);
+    padding: 20px;
+    border: 1px solid rgba(149, 189, 215, 0.2);
+    box-shadow: var(--shadow-inset);
+}
+
+.result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95rem;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed rgba(149, 189, 215, 0.15);
+}
+
+.result-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-top: 4px;
+}
+
+.result-row span {
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.result-row strong {
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.profit-text {
+    color: #0d9488 !important;
+}
+
+.loss-text {
+    color: #e11d48 !important;
+}
+
 @keyframes rotateLogo {
     0% {
         transform: rotate(0deg);

@@ -2,6 +2,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     initBasicCalculator();
+    initShopkeeperCalculator();
 });
 
 // ==========================================
@@ -168,4 +169,96 @@ function initBasicCalculator() {
             clear();
         }
     });
+}
+
+// ==========================================
+// 2. Shopkeeper Calculator Module
+// ==========================================
+function initShopkeeperCalculator() {
+    const buyPriceInput = document.getElementById('shop-buying-price');
+    const sellPriceInput = document.getElementById('shop-selling-price');
+    const qtyInput = document.getElementById('shop-quantity');
+    const gstInput = document.getElementById('shop-gst');
+    const discountInput = document.getElementById('shop-discount');
+
+    const calculateBtn = document.getElementById('shopkeeper-calculate');
+    const resetBtn = document.getElementById('shopkeeper-reset');
+
+    const resTotalCost = document.getElementById('res-total-cost');
+    const resTotalSelling = document.getElementById('res-total-selling');
+    const resGstAmount = document.getElementById('res-gst-amount');
+    const resNetAmount = document.getElementById('res-net-amount');
+    const resProfitLabel = document.getElementById('res-profit-label');
+    const resProfitLoss = document.getElementById('res-profit-loss');
+
+    function calculate() {
+        const bp = parseFloat(buyPriceInput.value) || 0;
+        const sp = parseFloat(sellPriceInput.value) || 0;
+        const qty = parseInt(qtyInput.value) || 0;
+        const gstPercent = parseFloat(gstInput.value) || 0;
+        const discountPercent = parseFloat(discountInput.value) || 0;
+
+        // Total Cost (BP * Qty)
+        const totalCost = bp * qty;
+
+        // Total Selling (SP * Qty)
+        const totalSelling = sp * qty;
+
+        // Discount amount
+        const discountAmount = totalSelling * (discountPercent / 100);
+
+        // Discounted revenue
+        const discountedRevenue = totalSelling - discountAmount;
+
+        // GST amount
+        const gstAmount = discountedRevenue * (gstPercent / 100);
+
+        // Net Amount
+        const netAmount = discountedRevenue + gstAmount;
+
+        // Profit / Loss
+        const profitOrLoss = discountedRevenue - totalCost;
+
+        // Profit %
+        let profitPercent = 0;
+        if (totalCost > 0) {
+            profitPercent = (profitOrLoss / totalCost) * 100;
+        }
+
+        // Display results
+        resTotalCost.textContent = `$${totalCost.toFixed(2)}`;
+        resTotalSelling.textContent = `$${totalSelling.toFixed(2)}`;
+        resGstAmount.textContent = `$${gstAmount.toFixed(2)}`;
+        resNetAmount.textContent = `$${netAmount.toFixed(2)}`;
+
+        // Handle profit / loss display dynamically
+        if (profitOrLoss >= 0) {
+            resProfitLabel.textContent = 'Profit:';
+            resProfitLoss.textContent = `$${profitOrLoss.toFixed(2)} (${profitPercent.toFixed(2)}%)`;
+            resProfitLoss.className = 'profit-text';
+        } else {
+            resProfitLabel.textContent = 'Loss:';
+            resProfitLoss.textContent = `$${Math.abs(profitOrLoss).toFixed(2)} (${Math.abs(profitPercent).toFixed(2)}%)`;
+            resProfitLoss.className = 'loss-text';
+        }
+    }
+
+    function reset() {
+        buyPriceInput.value = '';
+        sellPriceInput.value = '';
+        qtyInput.value = '1';
+        gstInput.value = '0';
+        discountInput.value = '0';
+
+        resTotalCost.textContent = '$0.00';
+        resTotalSelling.textContent = '$0.00';
+        resGstAmount.textContent = '$0.00';
+        resNetAmount.textContent = '$0.00';
+        resProfitLabel.textContent = 'Profit/Loss:';
+        resProfitLoss.textContent = '$0.00 (0%)';
+        resProfitLoss.className = '';
+    }
+
+    calculateBtn.addEventListener('click', calculate);
+    resetBtn.addEventListener('click', reset);
 }
