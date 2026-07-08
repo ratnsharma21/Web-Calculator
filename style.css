@@ -364,6 +364,198 @@ input {
     background-color: var(--bg-primary);
 }
 
+.calculators-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    align-items: start;
+}
+
+@media (max-width: 992px) {
+    .calculators-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Calculator Card Styles */
+.calc-card {
+    background-color: var(--card-bg);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    box-shadow: var(--shadow-soft);
+    border: 1px solid rgba(149, 189, 215, 0.15);
+    transition: var(--transition-smooth);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.calc-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-medium);
+}
+
+.calc-header {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.calc-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.calc-desc {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.45;
+}
+
+.calc-body {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Calculator Screen */
+.calc-screen {
+    background-color: #f8fafc;
+    border-radius: var(--radius-md);
+    padding: 16px 20px;
+    min-height: 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 20px;
+    border: 1px solid rgba(149, 189, 215, 0.2);
+    box-shadow: var(--shadow-inset);
+    word-break: break-all;
+    user-select: text;
+}
+
+.screen-expr {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    min-height: 1.2rem;
+    letter-spacing: 0.5px;
+}
+
+.screen-val {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: 0.5px;
+    line-height: 1;
+}
+
+/* Basic Calculator Grid */
+.basic-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+/* Base Button */
+.btn {
+    height: 54px;
+    border-radius: var(--radius-md);
+    font-size: 1.15rem;
+    font-weight: 600;
+    background-color: #ffffff;
+    color: var(--text-primary);
+    border: 1px solid rgba(149, 189, 215, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-smooth);
+    user-select: none;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(120, 164, 203, 0.15);
+    border-color: rgba(120, 164, 203, 0.4);
+    background-color: #fcfcfc;
+}
+
+.btn:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+/* Special Button Variants */
+.btn-action {
+    background-color: rgba(149, 189, 215, 0.1);
+    color: #475569;
+    border-color: rgba(149, 189, 215, 0.15);
+}
+.btn-action:hover {
+    background-color: rgba(149, 189, 215, 0.2);
+    border-color: rgba(149, 189, 215, 0.3);
+}
+
+.btn-operator {
+    background-color: rgba(180, 225, 235, 0.25);
+    color: #0f172a;
+    border-color: rgba(180, 225, 235, 0.4);
+}
+.btn-operator:hover {
+    background-color: rgba(180, 225, 235, 0.4);
+    border-color: rgba(180, 225, 235, 0.6);
+}
+
+.btn-equals {
+    grid-row: span 2;
+    height: auto;
+    background-color: var(--accent-highlight);
+    color: #ffffff;
+    border-color: var(--accent-highlight);
+    font-size: 1.35rem;
+}
+.btn-equals:hover {
+    background-color: #648fb1;
+    border-color: #648fb1;
+    box-shadow: 0 6px 16px rgba(120, 164, 203, 0.35);
+}
+
+.btn-zero {
+    grid-column: span 2;
+}
+
+/* Card Actions */
+.calc-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.btn-reset {
+    flex: 1;
+    padding: 14px;
+    border-radius: var(--radius-md);
+    font-weight: 700;
+    font-size: 0.95rem;
+    background-color: #f8fafc;
+    color: var(--text-secondary);
+    border: 1px solid rgba(149, 189, 215, 0.2);
+    transition: var(--transition-smooth);
+    text-align: center;
+}
+
+.btn-reset:hover {
+    background-color: #f1f5f9;
+    color: var(--text-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-color: rgba(149, 189, 215, 0.4);
+}
+
+.btn-reset:active {
+    transform: translateY(0);
+}
+
 @keyframes rotateLogo {
     0% {
         transform: rotate(0deg);
