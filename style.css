@@ -200,3 +200,175 @@ input {
     height: 18px;
     fill: currentColor;
 }
+
+/* Hero Section */
+.hero {
+    position: relative;
+    padding: 80px 0 60px 0;
+    background: linear-gradient(180deg, var(--bg-primary) 0%, rgba(180, 225, 235, 0.3) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.hero-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hero-logo-wrapper {
+    margin-bottom: 24px;
+    perspective: 1000px;
+}
+
+.hero-logo {
+    position: relative;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1.5px solid rgba(255, 255, 255, 0.6);
+    box-shadow: var(--shadow-medium);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: rotateLogo 25s linear infinite;
+    transition: var(--transition-bounce);
+}
+
+.hero-logo:hover {
+    transform: scale(1.05);
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 20px 40px rgba(120, 164, 203, 0.25);
+    animation-play-state: paused;
+}
+
+.operator {
+    position: absolute;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--accent-highlight);
+    user-select: none;
+    transition: var(--transition-bounce);
+    cursor: default;
+}
+
+.op-plus {
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.hero-logo:hover .op-plus {
+    transform: translateX(-50%) scale(1.2);
+}
+.op-plus:hover {
+    color: var(--text-primary) !important;
+    transform: translateX(-50%) scale(1.4) !important;
+}
+
+.op-minus {
+    top: 50%;
+    left: 24px;
+    transform: translateY(-50%);
+}
+.hero-logo:hover .op-minus {
+    transform: translateY(-50%) scale(1.2);
+}
+.op-minus:hover {
+    color: var(--text-primary) !important;
+    transform: translateY(-50%) scale(1.4) !important;
+}
+
+.op-multiply {
+    top: 50%;
+    right: 24px;
+    transform: translateY(-50%);
+}
+.hero-logo:hover .op-multiply {
+    transform: translateY(-50%) scale(1.2);
+}
+.op-multiply:hover {
+    color: var(--text-primary) !important;
+    transform: translateY(-50%) scale(1.4) !important;
+}
+
+.op-divide {
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.hero-logo:hover .op-divide {
+    transform: translateX(-50%) scale(1.2);
+}
+.op-divide:hover {
+    color: var(--text-primary) !important;
+    transform: translateX(-50%) scale(1.4) !important;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    letter-spacing: -1px;
+}
+
+.hero-tagline {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 32px;
+}
+
+.start-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--accent-highlight);
+    color: #ffffff;
+    padding: 14px 28px;
+    border-radius: var(--radius-lg);
+    font-weight: 700;
+    font-size: 1.05rem;
+    box-shadow: 0 8px 24px rgba(120, 164, 203, 0.25);
+    transition: var(--transition-bounce);
+}
+
+.start-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(120, 164, 203, 0.4);
+    background-color: #648fb1;
+}
+
+.start-btn:active {
+    transform: translateY(0);
+}
+
+.arrow-down-icon {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
+}
+
+.start-btn:hover .arrow-down-icon {
+    transform: translateY(3px);
+}
+
+/* Main Calculators Section */
+.calculators-section {
+    padding: 80px 0;
+    background-color: var(--bg-primary);
+}
+
+@keyframes rotateLogo {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
