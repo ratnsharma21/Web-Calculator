@@ -3,6 +3,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     initBasicCalculator();
     initShopkeeperCalculator();
+    initScientificCalculator();
 });
 
 // ==========================================
@@ -261,4 +262,243 @@ function initShopkeeperCalculator() {
 
     calculateBtn.addEventListener('click', calculate);
     resetBtn.addEventListener('click', reset);
+}
+
+// ==========================================
+// 3. Scientific Calculator Module
+// ==========================================
+function initScientificCalculator() {
+    const exprEl = document.getElementById('sci-expr');
+    const valEl = document.getElementById('sci-val');
+    const memIndEl = document.getElementById('sci-memory-indicator');
+    const buttons = document.querySelectorAll('#scientific-calc .scientific-grid .btn');
+    const calculateBtn = document.getElementById('scientific-calculate');
+    const resetBtn = document.getElementById('scientific-reset');
+
+    let expression = '';
+    let resultCalculated = false;
+    let memory = 0;
+
+    // Custom factorial helper function
+    function fact(n) {
+        if (n < 0) return NaN;
+        if (n === 0 || n === 1) return 1;
+        let r = 1;
+        for (let i = 2; i <= n; i++) r *= i;
+        return r;
+    }
+
+    // Update memory indicator visibility
+    function updateMemoryIndicator() {
+        if (memory !== 0) {
+            memIndEl.style.visibility = 'visible';
+        } else {
+            memIndEl.style.visibility = 'hidden';
+        }
+    }
+
+    // Format expression for screen display
+    function formatExpr(exprStr) {
+        return exprStr
+            .replace(/\*/g, ' × ')
+            .replace(/\//g, ' ÷ ')
+            .replace(/\+/g, ' + ')
+            .replace(/\-/g, ' − ')
+            .replace(/sin\(/g, 'sin(')
+            .replace(/cos\(/g, 'cos(')
+            .replace(/tan\(/g, 'tan(')
+            .replace(/log\(/g, 'log(')
+            .replace(/ln\(/g, 'ln(')
+            .replace(/sqrt\(/g, '√(')
+            .replace(/fact\(/g, 'fact(')
+            .replace(/\^/g, '^');
+    }
+
+    // Clear display
+    function clear() {
+        expression = '';
+        exprEl.textContent = '';
+        valEl.textContent = '0';
+        resultCalculated = false;
+    }
+
+    // Backspace delete
+    function backspace() {
+        if (resultCalculated) {
+            clear();
+            return;
+        }
+        
+        // Remove functions easily if matching
+        const funcs = ['sin(', 'cos(', 'tan(', 'log(', 'ln(', 'fact(', 'sqrt('];
+        let deleted = false;
+        
+        for (let f of funcs) {
+            if (expression.endsWith(f)) {
+                expression = expression.slice(0, -f.length);
+                deleted = true;
+                break;
+            }
+        }
+        
+        if (!deleted && expression.length > 0) {
+            expression = expression.slice(0, -1);
+        }
+        
+        exprEl.textContent = formatExpr(expression);
+        valEl.textContent = expression === '' ? '0' : formatExpr(expression);
+    }
+
+    // Append function / char
+    function append(char) {
+        if (resultCalculated) {
+            if (['+', '-', '*', '/', '^', '%'].includes(char)) {
+                expression = valEl.textContent;
+            } else {
+                expression = '';
+            }
+            resultCalculated = false;
+        }
+        expression += char;
+        exprEl.textContent = formatExpr(expression);
+        valEl.textContent = formatExpr(expression);
+    }
+
+    // Helper to evaluate scientific math expression
+    function evaluateExpression() {
+        if (expression === '') return 0;
+        
+        // Convert screen tokens to Javascript Math functions
+        let cleanExpr = expression
+            .replace(/π/g, 'Math.PI')
+            .replace(/e/g, 'Math.E')
+            .replace(/sin\(/g, 'Math.sin(')
+            .replace(/cos\(/g, 'Math.cos(')
+            .replace(/tan\(/g, 'Math.tan(')
+            .replace(/log\(/g, 'Math.log10(')
+            .replace(/ln\(/g, 'Math.log(')
+            .replace(/sqrt\(/g, 'Math.sqrt(')
+            .replace(/\^/g, '**')
+            .replace(/%/g, '*0.01'); // Treat percent symbol as a divide-by-100 modifier
+
+        try {
+            const result = new Function('fact', `return (${cleanExpr})`)(fact);
+            return result;
+        } catch (e) {
+            return NaN;
+        }
+    }
+
+    function calculate() {
+        const val = evaluateExpression();
+        if (isNaN(val) || !isFinite(val)) {
+            valEl.textContent = 'Error';
+            expression = '';
+        } else {
+            const roundedVal = Number(Math.round(val + 'e8') + 'e-8');
+            exprEl.textContent = formatExpr(expression) + ' =';
+            valEl.textContent = roundedVal.toString();
+            expression = roundedVal.toString();
+            resultCalculated = true;
+        }
+    }
+
+    // Grid buttons click
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            const val = button.getAttribute('data-val');
+            const action = button.getAttribute('data-action');
+
+            if (val !== null) {
+                append(val);
+            } else if (action) {
+                switch(action) {
+                    case 'clear':
+                        clear();
+                        break;
+                    case 'delete':
+                        backspace();
+                        break;
+                    case 'decimal':
+                        append('.');
+                        break;
+                    case 'add':
+                        append('+');
+                        break;
+                    case 'subtract':
+                        append('-');
+                        break;
+                    case 'multiply':
+                        append('*');
+                        break;
+                    case 'divide':
+                        append('/');
+                        break;
+                    case 'sin':
+                        append('sin(');
+                        break;
+                    case 'cos':
+                        append('cos(');
+                        break;
+                    case 'tan':
+                        append('tan(');
+                        break;
+                    case 'log':
+                        append('log(');
+                        break;
+                    case 'ln':
+                        append('ln(');
+                        break;
+                    case 'sqrt':
+                        append('sqrt(');
+                        break;
+                    case 'factorial':
+                        append('fact(');
+                        break;
+                    case 'power':
+                        append('^');
+                        break;
+                    case 'square':
+                        append('^2');
+                        break;
+                    case 'cube':
+                        append('^3');
+                        break;
+                    case 'percent':
+                        append('%');
+                        break;
+                    
+                    // Memory functions
+                    case 'mc':
+                        memory = 0;
+                        updateMemoryIndicator();
+                        break;
+                    case 'mr':
+                        append(memory.toString());
+                        break;
+                    case 'm-plus':
+                        const addVal = evaluateExpression();
+                        if (!isNaN(addVal) && isFinite(addVal)) {
+                            memory += addVal;
+                            updateMemoryIndicator();
+                        }
+                        break;
+                    case 'm-minus':
+                        const subVal = evaluateExpression();
+                        if (!isNaN(subVal) && isFinite(subVal)) {
+                            memory -= subVal;
+                            updateMemoryIndicator();
+                        }
+                        break;
+                }
+            }
+        });
+    });
+
+    calculateBtn.addEventListener('click', calculate);
+    resetBtn.addEventListener('click', () => {
+        clear();
+        memory = 0;
+        updateMemoryIndicator();
+    });
 }

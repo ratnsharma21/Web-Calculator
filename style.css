@@ -671,6 +671,51 @@ input {
     color: #e11d48 !important;
 }
 
+/* Scientific Calculator */
+.scientific-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+}
+
+.scientific-grid .btn {
+    height: 46px;
+    font-size: 0.95rem;
+    padding: 2px;
+}
+
+.btn-sci-action {
+    background-color: rgba(149, 189, 215, 0.1);
+    color: #475569;
+    font-weight: 700;
+    border-color: rgba(149, 189, 215, 0.15);
+}
+.btn-sci-action:hover {
+    background-color: rgba(149, 189, 215, 0.2);
+    border-color: rgba(149, 189, 215, 0.35);
+}
+
+.btn-sci-op {
+    background-color: rgba(180, 225, 235, 0.15);
+    color: #334155;
+    border-color: rgba(180, 225, 235, 0.25);
+    font-size: 0.9rem !important;
+}
+.btn-sci-op:hover {
+    background-color: rgba(180, 225, 235, 0.35);
+    border-color: rgba(180, 225, 235, 0.5);
+}
+
+@media (max-width: 480px) {
+    .scientific-grid {
+        gap: 6px;
+    }
+    .scientific-grid .btn {
+        height: 40px;
+        font-size: 0.85rem;
+    }
+}
+
 @keyframes rotateLogo {
     0% {
         transform: rotate(0deg);
