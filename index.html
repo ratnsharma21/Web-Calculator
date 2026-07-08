@@ -246,6 +246,169 @@
                     </div>
                 </div>
 
+                <!-- 4. Percentage Calculator -->
+                <div class="calc-card fade-up" id="percentage-calc">
+                    <div class="calc-header">
+                        <h2 class="calc-title">Percentage Calculator</h2>
+                        <p class="calc-desc">Calculate percentages, percentage change, mark conversions, and CGPA calculations.</p>
+                    </div>
+                    
+                    <div class="calc-body">
+                        <!-- Top Tabs Selection -->
+                        <div class="pct-tabs">
+                            <button class="pct-tab-btn active" data-tab="pct-tab-1">X% of Y</button>
+                            <button class="pct-tab-btn" data-tab="pct-tab-2">X is % of Y</button>
+                            <button class="pct-tab-btn" data-tab="pct-tab-3">Inc %</button>
+                            <button class="pct-tab-btn" data-tab="pct-tab-4">Dec %</button>
+                            <button class="pct-tab-btn" data-tab="pct-tab-5">Marks %</button>
+                            <button class="pct-tab-btn" data-tab="pct-tab-6">CGPA to %</button>
+                        </div>
+
+                        <!-- Tab Panels -->
+                        <div class="pct-panels">
+                            <!-- Panel 1: What is X% of Y? -->
+                            <div class="pct-panel active" id="pct-tab-1">
+                                <h3 class="panel-title">What is X% of Y?</h3>
+                                <p class="panel-desc">Find the value of a percentage relative to a total.</p>
+                                <div class="panel-inputs">
+                                    <div class="input-group">
+                                        <label for="pct1-x">Percentage (X)</label>
+                                        <input type="number" id="pct1-x" placeholder="e.g. 15" step="any">
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="pct1-y">Total Value (Y)</label>
+                                        <input type="number" id="pct1-y" placeholder="e.g. 200" step="any">
+                                    </div>
+                                </div>
+                                <div class="calc-actions">
+                                    <button class="btn-calculate" id="pct1-calculate">Calculate</button>
+                                    <button class="btn-reset" id="pct1-reset">Reset</button>
+                                </div>
+                                <div class="pct-result-box">
+                                    <span>Result Value:</span>
+                                    <strong id="pct1-result">0.00</strong>
+                                </div>
+                            </div>
+
+                            <!-- Panel 2: X is what percent of Y? -->
+                            <div class="pct-panel" id="pct-tab-2">
+                                <h3 class="panel-title">X is what percent of Y?</h3>
+                                <p class="panel-desc">Determine the percentage share of a value compared to another.</p>
+                                <div class="panel-inputs">
+                                    <div class="input-group">
+                                        <label for="pct2-x">Value (X)</label>
+                                        <input type="number" id="pct2-x" placeholder="e.g. 30" step="any">
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="pct2-y">Total Value (Y)</label>
+                                        <input type="number" id="pct2-y" placeholder="e.g. 150" step="any">
+                                    </div>
+                                </div>
+                                <div class="calc-actions">
+                                    <button class="btn-calculate" id="pct2-calculate">Calculate</button>
+                                    <button class="btn-reset" id="pct2-reset">Reset</button>
+                                </div>
+                                <div class="pct-result-box">
+                                    <span>Percentage Share:</span>
+                                    <strong id="pct2-result">0%</strong>
+                                </div>
+                            </div>
+
+                            <!-- Panel 3: Increase by percentage -->
+                            <div class="pct-panel" id="pct-tab-3">
+                                <h3 class="panel-title">Increase by percentage</h3>
+                                <p class="panel-desc">Add a specific percentage growth to a base value.</p>
+                                <div class="panel-inputs">
+                                    <div class="input-group">
+                                        <label for="pct3-val">Base Value</label>
+                                        <input type="number" id="pct3-val" placeholder="e.g. 80" step="any">
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="pct3-pct">Percentage Increase (%)</label>
+                                        <input type="number" id="pct3-pct" placeholder="e.g. 20" step="any">
+                                    </div>
+                                </div>
+                                <div class="calc-actions">
+                                    <button class="btn-calculate" id="pct3-calculate">Calculate</button>
+                                    <button class="btn-reset" id="pct3-reset">Reset</button>
+                                </div>
+                                <div class="pct-result-box">
+                                    <span>Increased Value:</span>
+                                    <strong id="pct3-result">0.00</strong>
+                                </div>
+                            </div>
+
+                            <!-- Panel 4: Decrease by percentage -->
+                            <div class="pct-panel" id="pct-tab-4">
+                                <h3 class="panel-title">Decrease by percentage</h3>
+                                <p class="panel-desc">Subtract a specific percentage reduction from a base value.</p>
+                                <div class="panel-inputs">
+                                    <div class="input-group">
+                                        <label for="pct4-val">Base Value</label>
+                                        <input type="number" id="pct4-val" placeholder="e.g. 150" step="any">
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="pct4-pct">Percentage Decrease (%)</label>
+                                        <input type="number" id="pct4-pct" placeholder="e.g. 15" step="any">
+                                    </div>
+                                </div>
+                                <div class="calc-actions">
+                                    <button class="btn-calculate" id="pct4-calculate">Calculate</button>
+                                    <button class="btn-reset" id="pct4-reset">Reset</button>
+                                </div>
+                                <div class="pct-result-box">
+                                    <span>Decreased Value:</span>
+                                    <strong id="pct4-result">0.00</strong>
+                                </div>
+                            </div>
+
+                            <!-- Panel 5: Marks Percentage Calculator -->
+                            <div class="pct-panel" id="pct-tab-5">
+                                <h3 class="panel-title">Marks Percentage Calculator</h3>
+                                <p class="panel-desc">Evaluate the percentage scored based on total possible marks.</p>
+                                <div class="panel-inputs">
+                                    <div class="input-group">
+                                        <label for="pct5-obtained">Marks Obtained</label>
+                                        <input type="number" id="pct5-obtained" placeholder="e.g. 425" step="any">
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="pct5-total">Total Marks</label>
+                                        <input type="number" id="pct5-total" placeholder="e.g. 500" step="any">
+                                    </div>
+                                </div>
+                                <div class="calc-actions">
+                                    <button class="btn-calculate" id="pct5-calculate">Calculate</button>
+                                    <button class="btn-reset" id="pct5-reset">Reset</button>
+                                </div>
+                                <div class="pct-result-box">
+                                    <span>Score Percentage:</span>
+                                    <strong id="pct5-result">0%</strong>
+                                </div>
+                            </div>
+
+                            <!-- Panel 6: CGPA to Percentage -->
+                            <div class="pct-panel" id="pct-tab-6">
+                                <h3 class="panel-title">CGPA to Percentage</h3>
+                                <p class="panel-desc">Convert academic CGPA grades to percentages (CGPA × 9.5).</p>
+                                <div class="panel-inputs">
+                                    <div class="input-group">
+                                        <label for="pct6-cgpa">CGPA Score</label>
+                                        <input type="number" id="pct6-cgpa" placeholder="e.g. 9.2" min="0" max="10" step="any">
+                                    </div>
+                                </div>
+                                <div class="calc-actions">
+                                    <button class="btn-calculate" id="pct6-calculate">Calculate</button>
+                                    <button class="btn-reset" id="pct6-reset">Reset</button>
+                                </div>
+                                <div class="pct-result-box">
+                                    <span>Equivalent Percentage:</span>
+                                    <strong id="pct6-result">0%</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </main>

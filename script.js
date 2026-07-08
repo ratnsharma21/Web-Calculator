@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initBasicCalculator();
     initShopkeeperCalculator();
     initScientificCalculator();
+    initPercentageCalculator();
 });
 
 // ==========================================
@@ -500,5 +501,175 @@ function initScientificCalculator() {
         clear();
         memory = 0;
         updateMemoryIndicator();
+    });
+}
+
+// ==========================================
+// 4. Percentage Calculator Module
+// ==========================================
+function initPercentageCalculator() {
+    // Tab switching logic
+    const tabBtns = document.querySelectorAll('#percentage-calc .pct-tab-btn');
+    const panels = document.querySelectorAll('#percentage-calc .pct-panel');
+
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const targetTab = btn.getAttribute('data-tab');
+
+            // Remove active class
+            tabBtns.forEach(b => b.classList.remove('active'));
+            panels.forEach(p => p.classList.remove('active'));
+
+            // Add active class
+            btn.classList.add('active');
+            document.getElementById(targetTab).classList.add('active');
+        });
+    });
+
+    // Helper to format float output
+    function formatNumber(num) {
+        if (isNaN(num) || !isFinite(num)) return 'Error';
+        return Number(Math.round(num + 'e4') + 'e-4').toString(); // max 4 decimal places
+    }
+
+    // Panel 1: What is X% of Y?
+    const p1x = document.getElementById('pct1-x');
+    const p1y = document.getElementById('pct1-y');
+    const p1calc = document.getElementById('pct1-calculate');
+    const p1reset = document.getElementById('pct1-reset');
+    const p1res = document.getElementById('pct1-result');
+
+    p1calc.addEventListener('click', () => {
+        const x = parseFloat(p1x.value);
+        const y = parseFloat(p1y.value);
+        if (isNaN(x) || !isFinite(x) || isNaN(y) || !isFinite(y)) {
+            p1res.textContent = 'Error';
+            return;
+        }
+        const result = (x / 100) * y;
+        p1res.textContent = formatNumber(result);
+    });
+
+    p1reset.addEventListener('click', () => {
+        p1x.value = '';
+        p1y.value = '';
+        p1res.textContent = '0.00';
+    });
+
+    // Panel 2: X is what percent of Y?
+    const p2x = document.getElementById('pct2-x');
+    const p2y = document.getElementById('pct2-y');
+    const p2calc = document.getElementById('pct2-calculate');
+    const p2reset = document.getElementById('pct2-reset');
+    const p2res = document.getElementById('pct2-result');
+
+    p2calc.addEventListener('click', () => {
+        const x = parseFloat(p2x.value);
+        const y = parseFloat(p2y.value);
+        if (isNaN(x) || !isFinite(x) || isNaN(y) || !isFinite(y) || y === 0) {
+            p2res.textContent = 'Error';
+            return;
+        }
+        const result = (x / y) * 100;
+        p2res.textContent = formatNumber(result) + '%';
+    });
+
+    p2reset.addEventListener('click', () => {
+        p2x.value = '';
+        p2y.value = '';
+        p2res.textContent = '0%';
+    });
+
+    // Panel 3: Increase by percentage
+    const p3val = document.getElementById('pct3-val');
+    const p3pct = document.getElementById('pct3-pct');
+    const p3calc = document.getElementById('pct3-calculate');
+    const p3reset = document.getElementById('pct3-reset');
+    const p3res = document.getElementById('pct3-result');
+
+    p3calc.addEventListener('click', () => {
+        const base = parseFloat(p3val.value);
+        const pct = parseFloat(p3pct.value);
+        if (isNaN(base) || !isFinite(base) || isNaN(pct) || !isFinite(pct)) {
+            p3res.textContent = 'Error';
+            return;
+        }
+        const result = base + (base * (pct / 100));
+        p3res.textContent = formatNumber(result);
+    });
+
+    p3reset.addEventListener('click', () => {
+        p3val.value = '';
+        p3pct.value = '';
+        p3res.textContent = '0.00';
+    });
+
+    // Panel 4: Decrease by percentage
+    const p4val = document.getElementById('pct4-val');
+    const p4pct = document.getElementById('pct4-pct');
+    const p4calc = document.getElementById('pct4-calculate');
+    const p4reset = document.getElementById('pct4-reset');
+    const p4res = document.getElementById('pct4-result');
+
+    p4calc.addEventListener('click', () => {
+        const base = parseFloat(p4val.value);
+        const pct = parseFloat(p4pct.value);
+        if (isNaN(base) || !isFinite(base) || isNaN(pct) || !isFinite(pct)) {
+            p4res.textContent = 'Error';
+            return;
+        }
+        const result = base - (base * (pct / 100));
+        p4res.textContent = formatNumber(result);
+    });
+
+    p4reset.addEventListener('click', () => {
+        p4val.value = '';
+        p4pct.value = '';
+        p4res.textContent = '0.00';
+    });
+
+    // Panel 5: Marks Percentage Calculator
+    const p5obtained = document.getElementById('pct5-obtained');
+    const p5total = document.getElementById('pct5-total');
+    const p5calc = document.getElementById('pct5-calculate');
+    const p5reset = document.getElementById('pct5-reset');
+    const p5res = document.getElementById('pct5-result');
+
+    p5calc.addEventListener('click', () => {
+        const obtained = parseFloat(p5obtained.value);
+        const total = parseFloat(p5total.value);
+        if (isNaN(obtained) || !isFinite(obtained) || isNaN(total) || !isFinite(total) || total === 0) {
+            p5res.textContent = 'Error';
+            return;
+        }
+        const result = (obtained / total) * 100;
+        p5res.textContent = formatNumber(result) + '%';
+    });
+
+    p5reset.addEventListener('click', () => {
+        p5obtained.value = '';
+        p5total.value = '';
+        p5res.textContent = '0%';
+    });
+
+    // Panel 6: CGPA to Percentage
+    const p6cgpa = document.getElementById('pct6-cgpa');
+    const p6calc = document.getElementById('pct6-calculate');
+    const p6reset = document.getElementById('pct6-reset');
+    const p6res = document.getElementById('pct6-result');
+
+    p6calc.addEventListener('click', () => {
+        const cgpa = parseFloat(p6cgpa.value);
+        if (isNaN(cgpa) || !isFinite(cgpa) || cgpa < 0 || cgpa > 10) {
+            p6res.textContent = 'Error';
+            return;
+        }
+        const result = cgpa * 9.5;
+        p6res.textContent = formatNumber(result) + '%';
+    });
+
+    p6reset.addEventListener('click', () => {
+        p6cgpa.value = '';
+        p6res.textContent = '0%';
     });
 }

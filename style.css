@@ -716,6 +716,105 @@ input {
     }
 }
 
+/* Percentage Calculator */
+.pct-tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1.5px solid rgba(149, 189, 215, 0.15);
+}
+
+.pct-tab-btn {
+    padding: 8px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    background-color: #f1f5f9;
+    border: 1px solid transparent;
+    transition: var(--transition-smooth);
+}
+
+.pct-tab-btn:hover {
+    background-color: #e2e8f0;
+    color: var(--text-primary);
+}
+
+.pct-tab-btn.active {
+    background-color: var(--accent-highlight);
+    color: #ffffff;
+}
+
+.pct-panels {
+    position: relative;
+}
+
+.pct-panel {
+    display: none;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.pct-panel.active {
+    display: flex;
+}
+
+.panel-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.panel-desc {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    margin-top: -8px;
+    margin-bottom: 8px;
+}
+
+.panel-inputs {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.panel-inputs:has(> :only-child) {
+    grid-template-columns: 1fr;
+}
+
+@media (max-width: 480px) {
+    .panel-inputs {
+        grid-template-columns: 1fr;
+    }
+}
+
+.pct-result-box {
+    margin-top: 16px;
+    background-color: #f8fafc;
+    border-radius: var(--radius-md);
+    padding: 16px;
+    border: 1px solid rgba(149, 189, 215, 0.2);
+    box-shadow: var(--shadow-inset);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pct-result-box span {
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.pct-result-box strong {
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+
 @keyframes rotateLogo {
     0% {
         transform: rotate(0deg);
