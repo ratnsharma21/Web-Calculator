@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScientificCalculator();
     initPercentageCalculator();
     initScrollAnimations();
+    initHeaderScroll();
 });
 
 // ==========================================
@@ -754,4 +755,22 @@ function animateNumber(element, endValue, prefix = '', suffix = '', decimals = 2
     }
 
     requestAnimationFrame(update);
+}
+
+// ==========================================
+// 7. Header Scroll Blur Handler
+// ==========================================
+function initHeaderScroll() {
+    const header = document.querySelector('.header');
+    
+    function checkScroll() {
+        if (window.scrollY > 15) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    }
+    
+    checkScroll();
+    window.addEventListener('scroll', checkScroll);
 }
